@@ -30,11 +30,7 @@ const ProductsPage = () => {
     return () => clearTimeout(timer);
   }, [searchInput]);
 
-  useEffect(() => {
-    fetchProducts();
-  }, [searchTerm, categoryFilter, collectionFilter, activeFilter]);
-
-  const fetchProducts = async () => {
+  const fetchProducts = useCallback(async () => {
     setLoading(true);
     try {
       const params = {
@@ -52,7 +48,11 @@ const ProductsPage = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [searchTerm, categoryFilter, collectionFilter, activeFilter]);
+
+  useEffect(() => {
+    fetchProducts();
+  }, [fetchProducts]);
 
   const handleDelete = async (id) => {
     if (!window.confirm('Are you sure you want to delete this product?')) return;

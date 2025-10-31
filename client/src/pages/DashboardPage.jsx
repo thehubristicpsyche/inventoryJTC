@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { Package, AlertTriangle, TrendingUp, Plus, UploadCloud, FileText } from 'lucide-react';
 import { productService } from '../services/productService';
@@ -12,12 +12,9 @@ const DashboardPage = () => {
   });
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    fetchStats();
-  }, []);
-
-  const fetchStats = async () => {
+  const fetchStats = useCallback(async () => {
     try {
+      setLoading(true);
       const response = await productService.getStats();
       const statsData = response.data;
 
@@ -32,7 +29,11 @@ const DashboardPage = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    fetchStats();
+  }, [fetchStats]);
 
   const statCards = [
     {

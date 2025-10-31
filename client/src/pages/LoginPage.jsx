@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { getErrorMessage } from '../constants/errors';
 import { Package } from 'lucide-react';
 
 const LoginPage = () => {
@@ -21,15 +22,7 @@ const LoginPage = () => {
       navigate('/dashboard');
     } catch (err) {
       console.error('Login error:', err);
-      if (err.code === 'ERR_NETWORK' || err.message === 'Network Error') {
-        setError('Cannot connect to server. Please make sure the backend server is running on port 5001.');
-      } else if (err.response?.data?.message) {
-        setError(err.response.data.message);
-      } else if (err.message) {
-        setError(err.message);
-      } else {
-        setError('Login failed. Please check your credentials.');
-      }
+      setError(getErrorMessage(err));
     } finally {
       setLoading(false);
     }
