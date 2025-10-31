@@ -93,8 +93,17 @@ const DashboardPage = () => {
     <div className="min-h-screen bg-gray-50 p-4 -m-6">
       {/* Header */}
       <div className="mb-5">
-        <h1 className="text-3xl font-bold text-gray-900">Stock Planner</h1>
-        <p className="mt-1 text-sm text-gray-600">Manage your inventory and create quotations with ease</p>
+        <div className="flex items-center gap-4 mb-3">
+          <img 
+            src="/logo.png" 
+            alt="JTC Logo" 
+            className="h-12 w-auto object-contain"
+          />
+          <div>
+            <h1 className="text-3xl font-bold text-gray-900">Stock Planner</h1>
+            <p className="mt-1 text-sm text-gray-600">Manage your inventory and create quotations with ease</p>
+          </div>
+        </div>
       </div>
 
       {/* Stats Grid - More Compact */}

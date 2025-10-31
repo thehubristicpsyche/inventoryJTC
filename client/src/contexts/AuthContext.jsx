@@ -39,10 +39,15 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const login = async (email, password) => {
-    const response = await authService.login(email, password);
-    authService.storeAuth(response.data.token, response.data.user);
-    setUser(response.data.user);
-    return response;
+    try {
+      const response = await authService.login(email, password);
+      authService.storeAuth(response.data.token, response.data.user);
+      setUser(response.data.user);
+      return response;
+    } catch (error) {
+      console.error('Auth context login error:', error);
+      throw error;
+    }
   };
 
   const register = async (userData) => {
@@ -68,6 +73,7 @@ export const AuthProvider = ({ children }) => {
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
+
 
 
 
